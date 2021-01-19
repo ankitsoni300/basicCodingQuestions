@@ -1,0 +1,76 @@
+
+import Foundation
+
+class Node : Equatable{
+    static func == (lhs: Node, rhs: Node) -> Bool {
+        return (lhs.data == rhs.data)
+    }
+    
+    var data : Int
+    var left : Node?
+    var right : Node?
+    
+    init(data : Int) {
+        self.data = data
+    }
+}
+
+class BinaryTree{
+    var root : Node?
+    
+    func Issibling(node : Node?, nodeA : Node?, nodeB : Node?) -> Bool {
+        if node == nil{
+            return false
+        }
+        
+        return ((node?.left == nodeA && node?.right == nodeB) ||
+                    (node?.left == nodeB && node?.right == nodeA) ||
+                    Issibling(node: node?.left, nodeA: nodeA, nodeB: nodeB) ||
+                    Issibling(node: node?.right, nodeA: nodeA, nodeB: nodeB))
+    }
+    
+    func level(node : Node?, ptr : Node?, lev : Int) -> Int
+    {
+        
+        if (node == nil){
+            return 0
+        }
+        
+        if (node == ptr){
+            return lev
+        }
+        
+        let l = level(node : node?.left, ptr : ptr, lev : lev + 1);
+        if (l != 0){
+            return l
+        }
+    
+        return level(node : node?.right, ptr : ptr, lev : lev + 1);
+    }
+    
+    // Returns 1 if a and b are cousins, otherwise 0
+    func isCousin(node : Node?, nodeA : Node?, nodeB : Node?) -> Bool
+    {
+
+        return ((level(node: node, ptr: nodeA, lev: 1) == level(node: node, ptr: nodeB, lev: 1)) &&
+                    (!Issibling(node: node, nodeA: nodeA, nodeB: nodeB)))
+    }
+}
+
+
+let tree = BinaryTree()
+tree.root = Node(data: 1)
+tree.root?.left = Node(data: 2)
+tree.root?.right = Node(data: 3)
+tree.root?.left?.left = Node(data: 4)
+tree.root?.left?.right = Node(data: 5)
+tree.root?.left?.right?.right = Node(data: 15)
+tree.root?.right?.left = Node(data: 6)
+tree.root?.right?.right = Node(data: 7)
+tree.root?.right?.left?.right = Node(data: 8)
+
+var node1 : Node? = tree.root?.left?.left
+var node2 : Node? = tree.root?.right?.right
+
+
+tree.isCousin(node: tree.root, nodeA: node1, nodeB: node2)
