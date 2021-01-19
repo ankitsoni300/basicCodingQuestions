@@ -1,0 +1,20 @@
+func fibonacci(index : UInt) -> [Int]?{
+    var mainArr = [0,1]
+    if index < 3{
+        if index == 1{
+            return [0]
+        }else if index == 0{
+            return nil
+        }else{
+            return mainArr
+        }
+    }
+    for _ in 0...index - 3 {
+        let first = mainArr[mainArr.count - 2]
+        let last = mainArr.last!
+        mainArr.append(first+last)
+    }
+    return mainArr
+}
+
+print(fibonacci(index: 1))
