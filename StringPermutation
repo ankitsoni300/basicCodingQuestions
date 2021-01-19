@@ -1,0 +1,41 @@
+
+import Foundation
+
+class Permutation
+{
+
+    func permute(str : inout String, l : Int, r : Int)
+    {
+    
+        if (l == r){
+            print(str)
+        }
+        else
+        {
+            for i in l...r
+            {
+                str = swap(a: str,i: l,j: i)
+                permute(str: &str, l: l+1, r: r)
+                str = swap(a: str,i: l,j: i)
+            }
+        }
+    }
+ 
+    func swap(a : String, i : Int, j : Int) -> String
+    {
+        var temp : Character
+        var charArray : [Character] = Array(a)
+        temp = charArray[i]
+        charArray[i] = charArray[j]
+        charArray[j] = temp
+        return String(charArray)
+    }
+ 
+}
+
+
+var str = "ABC"
+var n = str.count
+var permutation : Permutation = Permutation()
+permutation.permute(str: &str, l: 0, r: n-1)
+
