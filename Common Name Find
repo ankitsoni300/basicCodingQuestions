@@ -1,0 +1,23 @@
+var arrCommonName = ["Ankit","Anshika","Ram","Ankit","Anshika","Ram","Ram","Ram","Ankit"]
+
+func commonName(arr : [String]) -> String{
+    var dict = [String : Int]()
+    for item in arrCommonName{
+        if let value = dict[item]{
+            dict[item] = value + 1
+        }else{
+            dict[item] = 1
+        }
+    }
+    var commonName = ""
+    var count = -1
+    for keys in dict.keys{
+        if dict[keys]! > count{
+            count = dict[keys]!
+            commonName = keys
+        }
+    }
+    return commonName
+}
+
+commonName(arr: arrCommonName)
