@@ -1,0 +1,61 @@
+import Foundation
+
+//Tree
+
+var arr = [1,2,3,4,5,6]
+
+class Node{
+    var value : Int
+    var leftNode : Node?
+    var rightNode : Node?
+    init(value : Int) {
+        self.value = value
+    }
+}
+
+func insert(arr : [Int], firstIndex : Int, lastIndex : Int) -> Node?{
+    if lastIndex < firstIndex{
+        return nil
+    }
+    let mid = (firstIndex + lastIndex)/2
+    let node = Node(value: arr[mid])
+    node.leftNode = insert(arr: arr, firstIndex: firstIndex, lastIndex: mid - 1)
+    node.rightNode = insert(arr: arr, firstIndex: mid + 1, lastIndex: lastIndex)
+    return node
+}
+
+let treeNode = insert(arr: arr, firstIndex: 0, lastIndex: arr.count - 1)
+
+ // Inorder
+//L-R-R
+
+func inorderTraversal(node : Node?){
+    print(node?.value ?? -1)
+    if node?.leftNode != nil{
+        inorderTraversal(node: node?.leftNode)
+    }
+    if node?.rightNode != nil{
+        inorderTraversal(node: node?.rightNode)
+    }
+}
+
+//inorderTraversal(node: treeNode)
+
+
+func binarySearchTree(value : Int, node : Node?) -> Bool{
+    if node == nil{
+        return false
+    }
+    if node?.value == value{
+        return true
+    }else if value < node!.value{
+        return binarySearchTree(value: value, node: node?.leftNode)
+    }else if value > node!.value{
+        return binarySearchTree(value: value, node: node?.rightNode)
+    }else{
+        return false
+    }
+}
+
+binarySearchTree(value: 7, node: treeNode)
+
