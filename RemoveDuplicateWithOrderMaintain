@@ -1,0 +1,5 @@
+var arr = ["B","A","B","E","A","B","C"]
+
+let uniqueOrdered = Array(NSOrderedSet(array: arr))
+
+print(uniqueOrdered)
