@@ -1,0 +1,18 @@
+func sum(n : Int) -> Int{
+    if n == 1{
+        return 1
+    }
+    return n + sum(n: n - 1)
+}
+
+sum(n: 5)
+
+
+func power(num : Int, pow : Int) -> Int{
+    if pow == 0{
+        return 1
+    }
+    return (num * power(num: num, pow: pow - 1))
+}
+
+power(num: 3, pow: 4)
