@@ -18,3 +18,23 @@ func fibonacci(index : UInt) -> [Int]?{
 }
 
 print(fibonacci(index: 1))
+
+//////////////////////////////////////////
+
+
+
+func fibonacci(items : Int) -> [Int]{
+    var arr = [Int]()
+    var first = 0
+    var second = 1
+    var next = -1
+    arr.append(first)
+    arr.append(second)
+    for _ in 0..<items - 2{
+        next = first + second
+        first = second
+        second = next
+        arr.append(next)
+    }
+    return arr
+}
