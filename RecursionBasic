@@ -16,3 +16,21 @@ func power(num : Int, pow : Int) -> Int{
 }
 
 power(num: 3, pow: 4)
+
+
+
+/////////
+
+func power(num : Int, pow : Int) -> Int{
+    if pow == 0{
+        return 1
+    }
+    if pow % 2 == 0{
+        return (power(num: num * num, pow: pow / 2))
+    }else{
+        return (num * power(num: num, pow: pow - 1))
+    }
+    
+}
+
+power(num: 3, pow: 4)
