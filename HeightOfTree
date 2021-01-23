@@ -1,0 +1,41 @@
+import Foundation
+
+class Node{
+    var value : Int
+    var leftNode : Node?
+    var rightNode : Node?
+    init(value : Int) {
+        self.value = value
+    }
+}
+
+class BinaryTree{
+    var root : Node?
+    
+    func heightOfTree(node : Node?) -> Int {
+        if node == nil{
+            return 0
+        }else{
+            let lHeight = heightOfTree(node: node?.leftNode)
+            let rHeight = heightOfTree(node: node?.rightNode)
+            
+            if lHeight > rHeight{
+                return lHeight + 1
+            }else{
+                return rHeight + 1
+            }
+        }
+    }
+}
+
+let obj = BinaryTree()
+obj.root = Node(value: 1)
+obj.root?.leftNode = Node(value: 2)
+obj.root?.rightNode = Node(value: 3)
+
+obj.root?.leftNode?.leftNode = Node(value: 4)
+obj.root?.leftNode?.leftNode?.leftNode = Node(value: 6)
+obj.root?.leftNode?.rightNode = Node(value: 5)
+
+
+obj.heightOfTree(node: obj.root)
