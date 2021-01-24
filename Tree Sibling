@@ -1,0 +1,35 @@
+import Foundation
+
+class Node{
+    var value : Int
+    var leftNode : Node?
+    var rightNode : Node?
+    
+    init(value : Int) {
+        self.value = value
+    }
+}
+
+class BinaryTree{
+    var root : Node?
+    
+    func isSibling(node : Node?, n1 : Int, n2 : Int) -> Bool {
+        if node == nil{
+            return false
+        }
+        
+        return (node?.leftNode?.value == n1 && node?.rightNode?.value == n2) || (node?.leftNode?.value == n2 && node?.rightNode?.value == n1) || (isSibling(node: node?.leftNode, n1: n1, n2: n2)) || (isSibling(node: node?.rightNode, n1: n1, n2: n2))
+    }
+    
+}
+
+let treeNode = BinaryTree()
+treeNode.root = Node(value: 1)
+treeNode.root?.leftNode = Node(value: 2)
+treeNode.root?.rightNode = Node(value: 3)
+treeNode.root?.leftNode?.leftNode = Node(value: 4)
+treeNode.root?.leftNode?.rightNode = Node(value: 5)
+treeNode.root?.leftNode?.leftNode?.leftNode = Node(value: 6)
+
+treeNode.isSibling(node: treeNode.root, n1: 2, n2: 4)
+
