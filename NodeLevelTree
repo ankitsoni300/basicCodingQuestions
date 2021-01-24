@@ -26,10 +26,8 @@ class BinaryTree{
         }
         
         downlevel = getLevel(node: node?.rightNode, data: data, level: level + 1)
-        if downlevel != 0 {
-            return downlevel
-        }
-        return 0
+        
+        return downlevel
     }
     
 }
