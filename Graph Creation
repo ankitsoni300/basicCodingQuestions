@@ -1,0 +1,112 @@
+import Foundation
+import XCPlayground
+
+//Vertex
+struct Vertex<T : Hashable> : Hashable, CustomStringConvertible{
+    var data : T
+    
+    var hashValue: Int {
+        return "\(data)".hashValue
+    }
+    
+    static public func ==(lhs: Vertex, rhs: Vertex) -> Bool {
+        return lhs.data == rhs.data
+    }
+    
+    var description: String {
+        return "\(data)"
+    }
+}
+
+struct Edge<T: Hashable> : Hashable {
+    var source: Vertex<T>
+    var destination: Vertex<T>
+    let weight: Double?
+    
+    var hashValue: Int {
+        return "\(source)\(destination)\(String(describing: weight))".hashValue
+    }
+    
+    static public func ==(lhs: Edge<T>, rhs: Edge<T>) -> Bool {
+        return lhs.source == rhs.source &&
+            lhs.destination == rhs.destination &&
+            lhs.weight == rhs.weight
+    }
+}
+
+
+class AdjacencyList<T: Hashable> {
+    var adjacencyDict : [Vertex<T>: [Edge<T>]] = [:]
+    init() {
+        
+    }
+    
+    func addDirectedEdge(from source: Vertex<T>, to destination: Vertex<T>, weight: Double?) {
+        let edge = Edge(source: source, destination: destination, weight: weight)
+        adjacencyDict[source]?.append(edge)
+    }
+    
+    func addUndirectedEdge(vertices: (Vertex<T>, Vertex<T>), weight: Double?) {
+      let (source, destination) = vertices
+      addDirectedEdge(from: source, to: destination, weight: weight)
+      addDirectedEdge(from: destination, to: source, weight: weight)
+    }
+
+    func createVertex(data: T) -> Vertex<T> {
+        let vertex = Vertex(data: data)
+        
+        if adjacencyDict[vertex] == nil {
+            adjacencyDict[vertex] = []
+        }
+        
+        return vertex
+    }
+    
+    func add(from source: Vertex<T>, to destination: Vertex<T>, weight: Double?) {
+        addUndirectedEdge(vertices: (source, destination), weight: weight)
+    }
+    
+    var description: CustomStringConvertible {
+        var result = ""
+        for (vertex, edges) in adjacencyDict {
+            var edgeString = ""
+            for (index, edge) in edges.enumerated() {
+                if index != edges.count - 1 {
+                    edgeString.append("\(edge.destination), ")
+                } else {
+                    edgeString.append("\(edge.destination)")
+                }
+            }
+            result.append("\(vertex) ---> [ \(edgeString) ] \n ")
+        }
+        return result
+    }
+
+}
+
+let adjacencyList = AdjacencyList<String>()
+
+let singapore = adjacencyList.createVertex(data: "Singapore")
+let tokyo = adjacencyList.createVertex(data: "Tokyo")
+let hongKong = adjacencyList.createVertex(data: "Hong Kong")
+let detroit = adjacencyList.createVertex(data: "Detroit")
+let sanFrancisco = adjacencyList.createVertex(data: "San Francisco")
+let washingtonDC = adjacencyList.createVertex(data: "Washington DC")
+let austinTexas = adjacencyList.createVertex(data: "Austin Texas")
+let seattle = adjacencyList.createVertex(data: "Seattle")
+
+adjacencyList.add(from: singapore, to: hongKong, weight: 300)
+adjacencyList.add(from: singapore, to: tokyo, weight: 500)
+adjacencyList.add(from: hongKong, to: tokyo, weight: 250)
+adjacencyList.add(from: tokyo, to: detroit, weight: 450)
+adjacencyList.add(from: tokyo, to: washingtonDC, weight: 300)
+adjacencyList.add(from: hongKong, to: sanFrancisco, weight: 600)
+adjacencyList.add(from: detroit, to: austinTexas, weight: 50)
+adjacencyList.add(from: austinTexas, to: washingtonDC, weight: 292)
+adjacencyList.add(from: sanFrancisco, to: washingtonDC, weight: 337)
+adjacencyList.add(from: washingtonDC, to: seattle, weight: 277)
+adjacencyList.add(from: sanFrancisco, to: seattle, weight: 218)
+adjacencyList.add(from: austinTexas, to: sanFrancisco, weight: 297)
+
+adjacencyList.description
+
