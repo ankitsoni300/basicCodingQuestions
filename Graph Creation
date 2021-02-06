@@ -18,6 +18,7 @@ struct Vertex<T : Hashable> : Hashable, CustomStringConvertible{
     }
 }
 
+//Edge
 struct Edge<T: Hashable> : Hashable {
     var source: Vertex<T>
     var destination: Vertex<T>
@@ -36,7 +37,9 @@ struct Edge<T: Hashable> : Hashable {
 
 
 class AdjacencyList<T: Hashable> {
+    
     var adjacencyDict : [Vertex<T>: [Edge<T>]] = [:]
+    
     init() {
         
     }
@@ -62,10 +65,28 @@ class AdjacencyList<T: Hashable> {
         return vertex
     }
     
-    func add(from source: Vertex<T>, to destination: Vertex<T>, weight: Double?) {
+    func add(from source: Vertex<T>, to destination: Vertex<T>, weight: Double? = 0) {
         addUndirectedEdge(vertices: (source, destination), weight: weight)
     }
     
+    func weight(from source: Vertex<T>, to destination: Vertex<T>) -> Double? {
+        guard let edges = adjacencyDict[source] else { 
+            return nil
+        }
+        
+        for edge in edges {
+            if edge.destination == destination {
+                return edge.weight
+            }
+        }
+        
+        return nil
+    }
+    
+    func edges(from source: Vertex<T>) -> [Edge<T>]? {
+        return adjacencyDict[source]
+    }
+
     var description: CustomStringConvertible {
         var result = ""
         for (vertex, edges) in adjacencyDict {
@@ -95,18 +116,18 @@ let washingtonDC = adjacencyList.createVertex(data: "Washington DC")
 let austinTexas = adjacencyList.createVertex(data: "Austin Texas")
 let seattle = adjacencyList.createVertex(data: "Seattle")
 
-adjacencyList.add(from: singapore, to: hongKong, weight: 300)
-adjacencyList.add(from: singapore, to: tokyo, weight: 500)
-adjacencyList.add(from: hongKong, to: tokyo, weight: 250)
-adjacencyList.add(from: tokyo, to: detroit, weight: 450)
-adjacencyList.add(from: tokyo, to: washingtonDC, weight: 300)
-adjacencyList.add(from: hongKong, to: sanFrancisco, weight: 600)
-adjacencyList.add(from: detroit, to: austinTexas, weight: 50)
-adjacencyList.add(from: austinTexas, to: washingtonDC, weight: 292)
-adjacencyList.add(from: sanFrancisco, to: washingtonDC, weight: 337)
-adjacencyList.add(from: washingtonDC, to: seattle, weight: 277)
-adjacencyList.add(from: sanFrancisco, to: seattle, weight: 218)
-adjacencyList.add(from: austinTexas, to: sanFrancisco, weight: 297)
+adjacencyList.add(from: singapore, to: hongKong)
+adjacencyList.add(from: singapore, to: tokyo)
+adjacencyList.add(from: hongKong, to: tokyo)
+adjacencyList.add(from: tokyo, to: detroit)
+adjacencyList.add(from: tokyo, to: washingtonDC)
+adjacencyList.add(from: hongKong, to: sanFrancisco)
+adjacencyList.add(from: detroit, to: austinTexas)
+adjacencyList.add(from: austinTexas, to: washingtonDC)
+adjacencyList.add(from: sanFrancisco, to: washingtonDC)
+adjacencyList.add(from: washingtonDC, to: seattle)
+adjacencyList.add(from: sanFrancisco, to: seattle)
+adjacencyList.add(from: austinTexas, to: sanFrancisco)
 
 adjacencyList.description
 
