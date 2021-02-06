@@ -1,0 +1,195 @@
+//
+//  ViewController.swift
+//  GraphBFS
+//
+//  Created by Ankit Soni on 06/02/21.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let adjacencyList = AdjacencyList<String>()
+        
+        let singapore = adjacencyList.createVertex(data: "Singapore")
+        let tokyo = adjacencyList.createVertex(data: "Tokyo")
+        let hongKong = adjacencyList.createVertex(data: "Hong Kong")
+        let detroit = adjacencyList.createVertex(data: "Detroit")
+        let sanFrancisco = adjacencyList.createVertex(data: "San Francisco")
+        let washingtonDC = adjacencyList.createVertex(data: "Washington DC")
+        let austinTexas = adjacencyList.createVertex(data: "Austin Texas")
+        let seattle = adjacencyList.createVertex(data: "Seattle")
+        
+        adjacencyList.add(from: singapore, to: hongKong)
+        adjacencyList.add(from: singapore, to: tokyo)
+        adjacencyList.add(from: hongKong, to: tokyo)
+        adjacencyList.add(from: tokyo, to: detroit)
+        adjacencyList.add(from: tokyo, to: washingtonDC)
+        adjacencyList.add(from: hongKong, to: sanFrancisco)
+        adjacencyList.add(from: detroit, to: austinTexas)
+        adjacencyList.add(from: austinTexas, to: washingtonDC)
+        adjacencyList.add(from: sanFrancisco, to: washingtonDC)
+        adjacencyList.add(from: washingtonDC, to: seattle)
+        adjacencyList.add(from: sanFrancisco, to: seattle)
+        adjacencyList.add(from: austinTexas, to: sanFrancisco)
+        
+        print(adjacencyList.description)
+        
+        if let edges = adjacencyList.bfs(from: singapore, to: sanFrancisco) {
+            for edge in edges {
+                print("\(edge.source) to \(edge.destination)")
+            }
+        }
+    }
+}
+
+//Queue
+struct Queue<T> : CustomStringConvertible
+{
+    var list = Array<T>()
+    
+    mutating func enqueue(element : T)
+    {
+        list.append(element)
+    }
+    
+    mutating func dequeue() -> T?
+    {
+        guard !list.isEmpty, let element = list.first else {
+            return nil
+        }
+        list.removeFirst()
+        return element
+    }
+    
+    var description: String {
+        return list.description
+    }
+}
+
+//Vertex
+struct Vertex<T : Hashable> : Hashable, CustomStringConvertible{
+    var data : T
+    
+    var hashValue: Int {
+        return "\(data)".hashValue
+    }
+    
+    static public func ==(lhs: Vertex, rhs: Vertex) -> Bool {
+        return lhs.data == rhs.data
+    }
+    
+    var description: String {
+        return "\(data)"
+    }
+}
+
+//Edge
+struct Edge<T: Hashable> : Hashable {
+    var source: Vertex<T>
+    var destination: Vertex<T>
+    
+    var hashValue: Int {
+        return "\(source)\(destination)".hashValue
+    }
+    
+    static public func ==(lhs: Edge<T>, rhs: Edge<T>) -> Bool {
+        return lhs.source == rhs.source &&
+            lhs.destination == rhs.destination
+    }
+}
+
+
+class AdjacencyList<T: Hashable> {
+    
+    var adjacencyDict : [Vertex<T>: [Edge<T>]] = [:]
+    
+    init() {
+        
+    }
+    
+    func addDirectedEdge(from source: Vertex<T>, to destination: Vertex<T>) {
+        let edge = Edge(source: source, destination: destination)
+        adjacencyDict[source]?.append(edge)
+    }
+    
+
+    func createVertex(data: T) -> Vertex<T> {
+        let vertex = Vertex(data: data)
+        
+        if adjacencyDict[vertex] == nil {
+            adjacencyDict[vertex] = []
+        }
+        
+        return vertex
+    }
+    
+    func add(from source: Vertex<T>, to destination: Vertex<T>) {
+        addDirectedEdge(from: source, to: destination)
+    }
+    
+    func edges(from source: Vertex<T>) -> [Edge<T>]? {
+        return adjacencyDict[source]
+    }
+
+    var description: CustomStringConvertible {
+        var result = ""
+        for (vertex, edges) in adjacencyDict {
+            var edgeString = ""
+            for (index, edge) in edges.enumerated() {
+                if index != edges.count - 1 {
+                    edgeString.append("\(edge.destination), ")
+                } else {
+                    edgeString.append("\(edge.destination)")
+                }
+            }
+            result.append("\(vertex) ---> [ \(edgeString) ] \n ")
+        }
+        return result
+    }
+    
+    func bfs(from source: Vertex<T>, to destination: Vertex<T>) -> [Edge<T>]? {
+        
+        var queue = Queue<Vertex<T>>()
+        queue.enqueue(element: source)
+        var visits : [Vertex<T> : Visit<T>] = [source: .source]
+        
+        while let visitedVertex = queue.dequeue() {
+            
+            if visitedVertex == destination {
+                var vertex = destination
+                var route: [Edge<T>] = []
+                
+                while let visit = visits[vertex],
+                      case .edge(let edge) = visit {
+                    
+                    route = [edge] + route
+                    vertex = edge.source
+                    
+                }
+                return route
+            }
+            
+            let neighbourEdges = edges(from: visitedVertex) ?? []
+            for edge in neighbourEdges {
+                if visits[edge.destination] == nil {
+                    queue.enqueue(element: edge.destination)
+                    visits[edge.destination] = .edge(edge)
+                }
+            }
+        }
+        return nil
+    }
+    
+}
+
+enum Visit<T: Hashable> {
+  case source
+  case edge(Edge<T>)
+}
+
+
+
