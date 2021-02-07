@@ -1,0 +1,45 @@
+class Node{
+    var value : Int
+    var leftNode : Node?
+    var rightNode : Node?
+    
+    init(value : Int) {
+        self.value = value
+    }
+}
+
+class Tree{
+    var root : Node?
+    var prev = 0
+    
+    func isBST(node : Node?) -> Bool{
+        if node != nil{
+            if !(isBST(node: node?.leftNode)){
+                return false
+            }
+            
+            if (node?.value ?? -1 <= prev){
+                return false
+            }
+            
+            prev = node?.value ?? -1
+            
+            return isBST(node: node?.rightNode)
+        }
+        return true
+    }
+}
+
+ let obj = Tree()
+        obj.root = Node(value: 5)
+        obj.root?.leftNode = Node(value: 2)
+        obj.root?.rightNode = Node(value: 15)
+        obj.root?.leftNode?.leftNode = Node(value: 1)
+        obj.root?.leftNode?.rightNode = Node(value: 4)
+
+        if obj.isBST(node: obj.root){
+            print("BST")
+        }else{
+            print("Not BST")
+        }
+
