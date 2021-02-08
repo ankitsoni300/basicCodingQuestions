@@ -1,0 +1,27 @@
+// MARK:- UserRegister
+    private func userRegister(){
+        let dictionaryData : [String : String] = [
+            "email": "eve.holt@reqres.in",
+            "password": "pistol"
+        ]
+        guard let url = URL(string: ApiUrlUser.RegisterUrl) else {
+            return
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "post"
+        do{
+            let httpBody = try JSONSerialization.data(withJSONObject: dictionaryData, options: .prettyPrinted)
+            urlRequest.httpBody = httpBody
+            urlRequest.addValue("application/json", forHTTPHeaderField: "content-type")
+        }catch(let error){
+            debugPrint(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if error == nil && data != nil{
+                let response = String(data: data!, encoding: .utf8)
+                debugPrint(response!)
+            }
+        }.resume()
+        
+    }
