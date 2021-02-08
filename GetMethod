@@ -1,0 +1,27 @@
+func getDataFromApi() {
+        guard let url = URL(string: ApiUrl.url.rawValue) else{
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "get"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        session.dataTask(with: request) { [weak self] (data, response, error) in
+            if error == nil{
+                guard let data = data else {
+                    return
+                }
+                do{
+                    self?.arrUserModel?.removeAll()
+                    let dataTemp = try JSONDecoder().decode([UserModel].self, from: data)
+                    self?.arrUserModel = dataTemp
+                    DispatchQueue.main.async {
+                        self?.tblView.reloadData()
+                    }
+                }catch let error{
+                    print(error)
+                }
+                
+            }
+        }.resume()
+    }
