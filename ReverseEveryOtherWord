@@ -1,0 +1,20 @@
+func everyOtherWordReverse(arrString : String) -> String{
+    let allWords = arrString.components(separatedBy: " ")
+    var newSentence = ""
+    for index in 0...allWords.count - 1{
+        let item = allWords[index]
+        if newSentence != ""{
+            newSentence = newSentence + " "
+        }
+        if index % 2 == 1{
+            let reverseWord = item.reversed()
+            newSentence = newSentence + reverseWord
+        }else{
+            newSentence = newSentence + item
+        }
+        
+    }
+    return newSentence
+}
+
+everyOtherWordReverse(arrString: "My name is Ankit Soni from Mathura")
