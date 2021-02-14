@@ -1,0 +1,21 @@
+//Binary Search
+
+func binarySearch(arr : [Int], value : Int) -> Int{
+    
+    var first = 0
+    var last = arr.count - 1
+    
+    while first <= first {
+        let mid = (first + last)/2
+        if value < arr[mid]{
+            last = mid - 1
+        }else if value > arr[mid]{
+            first = mid + 1
+        }else{
+            return mid
+        }
+    }
+    return 0
+}
+
+binarySearch(arr: [1,2,3,4,5,6], value: 4)
