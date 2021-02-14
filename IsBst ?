@@ -28,6 +28,16 @@ class Tree{
         }
         return true
     }
+    
+    func isBST(node : Node?, min : Int, max : Int) -> Bool{
+        if node == nil{
+            return true
+        }
+        if (node?.value ?? -1 < min) || (node?.value ?? -1 > max){
+            return false
+        }
+        return (isBST(node: node?.leftNode, min: min, max: (node?.value ?? -1) - 1) && isBST(node: node?.rightNode, min: (node?.value ?? -1) + 1, max: max))
+    }
 }
 
  let obj = Tree()
