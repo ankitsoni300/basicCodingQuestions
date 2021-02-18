@@ -1,0 +1,23 @@
+class Developer{
+    var completion : ((Int)->())?
+    func soTaskSum(x : Int, y : Int){
+        let result = x + y
+        completion?(result)
+    }
+}
+
+class Manager{
+    var refDeveloper : Developer?
+    init(refDeveloper : Developer?) {
+        self.refDeveloper = refDeveloper
+        refDeveloper?.completion = { data in
+            print(data)
+        }
+    }
+    func doSum(x : Int, y : Int){
+        refDeveloper?.soTaskSum(x: x, y: y)
+    }
+}
+
+let objManager = Manager(refDeveloper: Developer())
+objManager.doSum(x: 3, y: 4)
