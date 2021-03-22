@@ -1,0 +1,11 @@
+func twoSum(arr : [Int], target : Int){
+    var dict = [Int : Int]()
+    for i in 0..<arr.count{
+        if let temp = dict[target - arr[i]]{
+            print(arr[temp], arr[i])
+        }
+        dict[arr[i]] = i
+    }
+}
+
+twoSum(arr: [4,6,5,3,8,9,7], target: 10)
