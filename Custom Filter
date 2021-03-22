@@ -1,0 +1,21 @@
+extension Array{
+    func myFilter(completion : (Element) -> (Bool)) -> [Element]{
+        var tempArr = [Element]()
+        for item in self{
+            if completion(item){
+                tempArr.append(item)
+            }
+        }
+        return tempArr
+    }
+}
+
+var myClosure = { (v : Int) -> Bool in
+    if v % 2 == 0{
+        return true
+    }
+    return false
+}
+
+let arr = [1,2,3,4,5,6,7,8,9]
+let ans = arr.myFilter(completion: myClosure)
