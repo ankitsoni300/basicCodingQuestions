@@ -32,3 +32,37 @@ func start(){
 }
 
 start()
+
+
+
+// By Dispatch Group
+
+
+func dispa(){
+    let dispatchGroup = DispatchGroup()
+    DispatchQueue.global(qos: .background).async(group: dispatchGroup){
+        dispatchGroup.enter()
+        callApiA { (responseA) in
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        callApiB { (responseB) in
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        callApiC { (responseC) in
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            print("End")
+        }
+    }
+}
+
+dispa()
+
+
+
