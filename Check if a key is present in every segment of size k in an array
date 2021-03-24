@@ -1,0 +1,31 @@
+func keyPresent(arr : [Int], key : Int, range : Int) -> Bool{
+    let arrCount = arr.count
+    let first = 0
+    let last = arrCount - 1
+    let sequence = stride(from: first, to: last, by: range)
+    var flag = false
+    
+    for element in sequence{
+        for j in element..<(range + element){
+            if arr[j] == key{
+                flag = true
+                break
+            }else{
+                flag = false
+            }
+        }
+        if flag == false{
+            return false
+        }
+    }
+    
+    if flag{
+        return true
+    }else{
+        return false
+    }
+    
+}
+
+var myArr = [3, 5, 2, 4, 9, 3, 1, 7, 3, 11, 12, 3]
+keyPresent(arr: myArr, key: 3, range: 3)
