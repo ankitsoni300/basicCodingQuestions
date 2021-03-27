@@ -1,0 +1,36 @@
+func largetSumSubArray(arr : [Int]){
+    var maxArrSum = 0
+    for i in 0..<arr.count{
+        var sum = 0
+        for j in i..<arr.count{
+            sum = sum + arr[j]
+            if sum > maxArrSum{
+                maxArrSum = sum
+            }
+        }
+    }
+    print(maxArrSum)
+}
+
+largetSumSubArray(arr: [-2, -3, 4, -1, -2, 1, 5, -3])
+
+
+---------
+
+func largetSumSubArray(arr : [Int]) -> Int{
+    var maxSum = 0
+    var countSum = 0
+    for i in 0..<arr.count{
+        countSum = countSum + arr[i]
+        if countSum > maxSum{
+            maxSum = countSum
+        }
+        if countSum < 0 {
+            countSum = 0
+        }
+    }
+    
+    return maxSum
+}
+
+largetSumSubArray(arr: [-2, -3, 4, -1, -2, 1, 5, -3])
