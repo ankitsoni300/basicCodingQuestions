@@ -1,0 +1,15 @@
+extension Array where Element : Equatable{
+    func removeDuplicate() -> [Element]{
+        var result = [Element]()
+        for item in self{
+            if !(result.contains(item)){
+                result.append(item)
+            }
+        }
+        return result
+    }
+}
+
+let arr = [2,3,4,2,2,5,6,4,3,2,1]
+let ans = arr.removeDuplicate()
+print(ans)
