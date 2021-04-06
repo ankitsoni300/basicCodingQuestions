@@ -1,0 +1,18 @@
+func oddEvenArr(arr : [Int]) -> [Int]{
+    var j = -1
+    var temp = 0
+    var tempArr = arr
+    for i in 0..<arr.count{
+        if arr[i] % 2 != 0{
+            j = j + 1
+            temp = tempArr[i]
+            tempArr[i] = tempArr[j]
+            tempArr[j] = temp
+        }
+    }
+    
+    return tempArr
+}
+
+let ans = oddEvenArr(arr: arr)
+print(ans)
