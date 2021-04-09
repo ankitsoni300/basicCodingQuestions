@@ -1,0 +1,10 @@
+let fruitsArray = ["apple", "mango", "blueberry", "orange"]
+let vegArray = ["tomato", "potato", "mango", "blueberry"]
+
+let output = fruitsArray.filter { (value) in
+    if vegArray.contains(value){
+        return true
+    }else{
+        return false
+    }
+}
