@@ -1,0 +1,25 @@
+extension Array {
+    func rotate(moveRight: Bool, numOfRotations: Int) -> Array<Element>{
+        var arr = self
+        var i = 0
+        while i < numOfRotations {
+            if moveRight {
+                arr.insert(arr.remove(at: arr.count - 1), at: 0)
+            } else {
+                arr.append(arr.remove(at: 0))
+            }
+            i += 1
+        }
+        return arr
+    }
+}
+
+var arr = ["a","b","c","d","e"]
+
+print(arr.rotate(moveRight: true, numOfRotations: 2))
+// ["d", "e", "a", "b", "c"]
+print(arr)
+// ["a", "b", "c", "d", "e"]
+arr = arr.rotate(moveRight: true, numOfRotations: 2)
+print(arr)
+// ["d", "e", "a", "b", "c"]
