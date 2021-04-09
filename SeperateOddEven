@@ -16,3 +16,24 @@ func oddEvenArr(arr : [Int]) -> [Int]{
 
 let ans = oddEvenArr(arr: arr)
 print(ans)
+
+
+-------------------
+
+func sortArrayOddsBeforeEvens(array: [Int]) -> [Int] {
+    return array.filter { (value) in
+        if value % 2 != 0{
+            return true
+        }else{
+            return false
+        }
+    } + array.filter{ (value) in
+        if value % 2 == 0{
+            return true
+        }else{
+            return false
+        }
+    }
+}
+
+print(sortArrayOddsBeforeEvens(array: [1,3,4,8,11,12,27,18,7]))
