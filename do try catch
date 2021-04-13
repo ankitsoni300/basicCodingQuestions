@@ -1,0 +1,35 @@
+class LoginVC{
+    enum myError : Error{
+        case invalidEmail
+        case invalidPassword
+    }
+    
+    func btnLoginAction(){
+        do {
+            try btnLoginClick()
+            // go to homeVC
+            print("go to homeVC")
+        } catch myError.invalidEmail {
+            print("Invalid email")
+        } catch myError.invalidPassword {
+            print("Invalid password")
+        } catch let error{
+            print(error.localizedDescription)
+        }
+    }
+    
+    func btnLoginClick() throws{
+        let email = ""
+        let pswd = "123456"
+        
+        if email.isEmpty{
+            throw myError.invalidEmail
+        }else if pswd.isEmpty{
+            throw myError.invalidPassword
+        }
+    }
+    
+}
+
+let obj = LoginVC()
+obj.btnLoginAction()
