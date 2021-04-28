@@ -1,0 +1,33 @@
+import Foundation
+import UIKit
+
+enum Direction{
+    case East(length : Int)
+    case West(length : Int)
+    case North(length : Int)
+    case South(length : Int)
+    
+    static let abc = "nice"
+    
+    func wow(){
+        print("ankit")
+    }
+}
+
+func yourDirection(dir : Direction){
+    switch dir {
+    case .East(let length):
+        print(length)
+    case .West(let length):
+        print(length)
+    case .North(let length):
+        print(length)
+    case .South(let length):
+        print(length)
+    }
+}
+
+yourDirection(dir: .South(length: 56))
+
+let obj = Direction.East(length: 40)
+Direction.abc
