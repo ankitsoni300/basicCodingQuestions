@@ -1,0 +1,24 @@
+func reverseString(str : String) -> String{
+    var first = 0
+    var last = str.count - 1
+    var arrStr = Array(str)
+
+    while first < last {
+        if !(arrStr[first].isLetter){
+            first = first + 1
+        }else if !(arrStr[last].isLetter){
+            last = last - 1
+        }else{
+            let temp = arrStr[first]
+            arrStr[first] = arrStr[last]
+            arrStr[last] = temp
+            first = first + 1
+            last = last - 1
+        }
+    }
+    
+    return String(arrStr)
+
+}
+
+reverseString(str: "Ab,c,de!$")
