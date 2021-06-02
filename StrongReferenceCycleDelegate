@@ -1,0 +1,27 @@
+protocol SendDataDelegate : class{
+    
+}
+
+class SendingVC{
+    weak var delegate : SendDataDelegate?
+    deinit {
+        print("SendingVC deinit")
+    }
+}
+
+class ReceivingVC : SendDataDelegate{
+    var refSendingVC : SendingVC?
+    init(refSendingVC : SendingVC?) {
+        self.refSendingVC = refSendingVC
+        refSendingVC?.delegate = self
+    }
+    deinit {
+        print("ReceivingVC deinit")
+    }
+}
+
+var objSendVC : SendingVC? = SendingVC()
+var objReceivingVC : ReceivingVC? = ReceivingVC(refSendingVC: objSendVC)
+
+objSendVC = nil
+objReceivingVC = nil
