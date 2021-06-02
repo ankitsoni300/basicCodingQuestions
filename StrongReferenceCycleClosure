@@ -1,0 +1,24 @@
+class Person{
+    var name : Int = 0
+    var myClosure : (() -> ())?
+    
+    init() {
+        myClosure = { [weak self] in
+            print(self?.name ?? 0)
+        }
+    }
+    
+    func callClosure(){
+        self.myClosure?()
+    }
+    
+    deinit {
+        print("Person deallocatte")
+    }
+}
+
+var objPerson : Person? = Person()
+
+objPerson?.callClosure()
+
+objPerson = nil
