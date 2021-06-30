@@ -37,3 +37,36 @@ func sortArrayOddsBeforeEvens(array: [Int]) -> [Int] {
 }
 
 print(sortArrayOddsBeforeEvens(array: [1,3,4,8,11,12,27,18,7]))
+
+
+
+
+func evenOdd(arr : [Int]) -> [Int]{
+    var tempArr = arr
+    if tempArr.count <= 1{
+        return [0]
+    }
+    var left = 0
+    var right = tempArr.count - 1
+    while left < right {
+        while tempArr[left] % 2 == 0 && (left < right) {
+            left = left + 1
+        }
+        
+        while tempArr[right] % 2 != 0 && (left < right) {
+            right = right - 1
+        }
+        
+        if left < right{
+            let x = tempArr[left]
+            tempArr[left] = tempArr[right]
+            tempArr[right] = x
+            right = right - 1
+            left = left + 1
+        }
+    }
+    
+    return tempArr
+}
+
+evenOdd(arr: [1,2,3,4,5,6,7,8,9,10])
