@@ -1,5 +1,7 @@
 //Binary Search
 
+// Time Complexity -- O(Log n)
+
 func binarySearch(arr : [Int], value : Int) -> Int{
     
     var first = 0
