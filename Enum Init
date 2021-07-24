@@ -1,0 +1,16 @@
+enum Route {
+    case home
+    case users(id: Int)
+}
+
+extension Route {
+    init?(path: String) {
+        if path == "/" {
+            self = .home
+        } else if path.hasPrefix("/users") {
+            self = .users(id: 1)
+        } else {
+            return nil
+        }
+    }
+}
