@@ -1,0 +1,25 @@
+func seperateZeroOneTwo(arr : [Int]) -> [Int]{
+    var myArr = arr
+    var l = 0
+    var m = 0
+    var h = myArr.count - 1
+    myArr.forEach { _ in
+        if myArr[m] == 0{
+            let temp = myArr[m]
+            myArr[m] = myArr[l]
+            myArr[l] = temp
+            m = m + 1
+            l = l + 1
+        }else if myArr[m] == 1{
+            m = m + 1
+        }else if myArr[m] == 2{
+            let temp = myArr[h]
+            myArr[h] = myArr[m]
+            myArr[m] = temp
+            h = h - 1
+        }
+    }
+    return myArr
+}
+
+seperateZeroOneTwo(arr: [1,2,0,1,0,2,2,1,0])
