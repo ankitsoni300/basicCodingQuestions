@@ -1,0 +1,13 @@
+var str = "my name is ankit soni"
+
+func reverseStr(str : String) -> String{
+    let strArr = str.components(separatedBy: " ")
+    var tempStr = ""
+    for item in strArr{
+        tempStr = item + " " + tempStr
+    }
+    
+    return tempStr
+}
+
+reverseStr(str: str)
