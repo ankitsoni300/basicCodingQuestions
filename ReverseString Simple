@@ -11,3 +11,12 @@ func reverseStr(str : String) -> String{
 }
 
 reverseStr(str: str)
+
+
+let word = "my name is ankit"
+var reversed = ""
+for char in word {
+    reversed.insert(char, at: reversed.startIndex)
+    print(reversed)
+}
+print(reversed)
